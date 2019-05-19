@@ -1,0 +1,52 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:9.6-alpine
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=
+    volumes:
+      - .psqldata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    environment:
+      - APP_PORT=3001
+      - APP_HOST=0.0.0.0
+      - PG_ADDR=db:5432
+      - PG_DATABASE=postgres
+      - PG_USER=postgres
+    entrypoint:
+      - bash
+      - /app/wait-for-it.sh
+      - db:5432
+      - --
+      - flask
+      - run
+      - --host=0.0.0.0
+      - --port=3001
+    volumes:
+      - type: bind
+        source: ${PWD}/src
+        target: /app/src
+      - type: bind
+        source: ${PWD}/bin/wait-for-it.sh
+        target: /app/wait-for-it.sh
+    networks:
+      - backend
+
+volumes:
+  src:
+
+networks:
+  backend:
