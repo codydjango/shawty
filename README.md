@@ -1,6 +1,6 @@
-## 😎 Shawty url-shortening service 
+## 😎 Shawty URl shortening service 
 
-This service will take a standard url, and return a much shorter url comprised of a hand-selected set of very special emoji characters.
+This service will take a standard URL, and return a much shorter URL comprised of a hand-selected set of very special emoji characters.
 
 This API is built with python, graphql, and postgresql.
 
@@ -19,8 +19,8 @@ __Endpoints:__
 
 *REST*
 
-* GET `/<shawt-url>` return a http redirect (302) if an associated url is found.
-* POST `/` posting a request containing a body of `{url: <long-url>}` will result in the creation of your own short silly emoji url that you can share with your friends.
+* GET `/<shawt-url>` return a http redirect (302) if an associated URL is found.
+* POST `/` posting a request containing a body of `{url: <long-url>}` will result in the creation of your own short silly emoji URL that you can share with your friends.
 
 ### 🙈 Caveats 
 
@@ -30,7 +30,7 @@ look forward to discussing my choices.
 
 At the moment this is a backend service only, responding to GraphQL or REST requests. I might throw together a quick React frontend and add CORS support if I find spare time on Tuesday.
 
-In all seriousness this is not a great idea for general url-shortening, as many browsers and middleware technologies still have a difficult time with emoji characters. Still fun though. 👯
+In all seriousness this is not a great idea for general URL shortening, as many browsers and middleware technologies still have a difficult time with emoji characters. Still fun though. 👯
 
 ### 😼 Dependencies
 
