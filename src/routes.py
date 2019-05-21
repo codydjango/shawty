@@ -8,7 +8,7 @@ from helpers import is_valid_url, to_emoji_slug
 def create_routes(app):
     # On receiving a GET request, reply either with a 404 if it's not found in our database,
     # or a 301 redirect if it is.
-    @app.route('/<string:slug>', methods=['GET'])
+    @app.route('/rest/<string:slug>', methods=['GET'])
     def get_redirect(slug):
         url = Url.query.filter(Url.slug == slug).first()
 
@@ -22,7 +22,7 @@ def create_routes(app):
     #   3) grab the next id out of the database, use it to generate the next smallest available url
     #      save the new instance back to the database.
     #   4) return the new shortened url back to the client.
-    @app.route('/', methods=['POST'])
+    @app.route('/rest/', methods=['POST'])
     def create_url():
         if not request.is_json:
             abort(422)
@@ -46,13 +46,3 @@ def create_routes(app):
         db.session.commit()
 
         return jsonify({'shorter': url.get_full_short() })
-
-    # Require authentication before we handle updates. Return unimplemented.
-    @app.route('/<string:shorter>', methods=['PUT'])
-    def update_url(shorter):
-        abort(501)
-
-    # Require authentication before we handle deletes. Return unimplemented.
-    @app.route('/<string:shorter>', methods=['DELETE'])
-    def delete_url(shorter):
-        abort(501)
