@@ -2,7 +2,7 @@
 
 This service will take a standard URL, and return a much shorter URL comprised of a hand-selected set of very special emoji characters.
 
-This API is built with Python 3.6, Flask 1.0.3, Graphene 2.1.3, SQLAlchemy 1.3.3 and PostgreSQL 9.6.
+This API is built with `Python 3.6`, `Flask 1.0.3`, `Graphene 2.1.3`, `SQLAlchemy 1.3.3` and `PostgreSQL 9.6`.
 
 
 __Endpoints:__
