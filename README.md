@@ -6,7 +6,7 @@ This API is built with python, graphql, and postgresql.
 
 __Endpoints:__
 
-*graphQL*
+*GraphQL*
 
 * GraphQL interface is available at  `http://localhost:3001/graphql/
 * Responds to a query such as:
