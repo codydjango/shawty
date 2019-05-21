@@ -1,12 +1,9 @@
 FROM python:3.6-alpine
 
-RUN apk update && apk upgrade \
-    && apk add git bash build-base \
-    && apk add gcc python3-dev musl-dev postgresql-dev
-
-RUN pip install --upgrade pip \
-    && pip install psycopg2 \
-    && pip install flask
+RUN apk update && apk upgrade
+RUN apk add git bash build-base gcc python3-dev musl-dev postgresql-dev
+RUN pip install --upgrade pip
+RUN pip install psycopg2 flask flask-sqlalchemy
 
 COPY ./src /app/src
 SHELL ["/bin/bash", "-c"]

@@ -6,8 +6,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=postgres2
+      - POSTGRES_USER=postgres2
+      - POSTGRES_PASSWORD=postgres2
     volumes:
       - .psqldata:/var/lib/postgresql/data
     networks:
@@ -24,8 +25,9 @@ services:
       - APP_PORT=3001
       - APP_HOST=0.0.0.0
       - PG_ADDR=db:5432
-      - PG_DATABASE=postgres
-      - PG_USER=postgres
+      - PG_DB=postgres2
+      - PG_USER=postgres2
+      - PG_PASSWORD=postgres2
     entrypoint:
       - bash
       - /app/wait-for-it.sh
