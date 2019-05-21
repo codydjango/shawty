@@ -1,11 +1,17 @@
 import os
 from flask import Flask
+from routes import create_routes
+from database import db
 
-APP_HOST = os.environ.get('APP_HOST', '127.0.0.1')
-APP_PORT = os.environ.get('APP_PORT', '8000')
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.Config')
 
-app = Flask(__name__)
+    create_routes(app)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all(app=app)
+
+    return app
