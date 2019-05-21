@@ -14,16 +14,19 @@ __Endpoints:__
 
 ```
 {
-  	redirect_url (slug: "sm-19")
-  	urls
+  	redirectForSlug (slug: "💃😕") 
+  	slugs
 }
 ```
+
+* `slugs` returns a list of all short urls currencly registered
+* `redirectForSlug` return the redirect URL for a given slug
 
 *Mutation*
 
 ```
 mutation myFirstMutation { 
-  createShortUrl(redirectUrl: "http://codydjango.com/learning-rust10") {
+  createShortUrl(redirectUrl: "https://github.com/codydjango/shawty") {
   	short
     ok
   }
