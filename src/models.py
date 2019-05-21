@@ -1,6 +1,9 @@
 from database import db
 
-
+# Url class for storing our Url data. Slug and Redirect columns are declared
+# unique with index, so we can easily avoid duplicate urls in our system.
+# Eventually we might want to consider timestamps as well, or a scheme for
+# repurposing expired or orphaned urls.
 class Url(db.Model):
     __tablename__ = 'urls'
 

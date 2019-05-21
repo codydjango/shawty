@@ -2,9 +2,9 @@ from flask import redirect, jsonify, request, abort
 from models import Url
 from database import db
 from sqlalchemy.schema import Sequence
-from helpers import is_valid_url
+from helpers import is_valid_url, to_emoji_slug
 
-
+# Routes are instantiated with reference to app, as per the Flask convention.
 def create_routes(app):
     # On receiving a GET request, reply either with a 404 if it's not found in our database,
     # or a 301 redirect if it is.
@@ -37,23 +37,22 @@ def create_routes(app):
         url = Url.query.filter(Url.redirect==redirect_url).first()
 
         if url:
-            return jsonify({ 'short': url.get_full_short(), 'here': 'here' })
+            return jsonify({ 'shorter': url.get_full_short() })
 
         next_id = db.session.execute(Sequence("urls_id_seq"))
-        slug = "sm-{}".format(next_id)
-        url = Url(id=next_id, redirect=redirect_url, slug=slug)
+        url = Url(id=next_id, redirect=redirect_url, slug=to_emoji_slug(next_id))
 
         db.session.add(url)
         db.session.commit()
 
-        return jsonify({'short': url.get_full_short(), 'there': 'there'})
+        return jsonify({'shorter': url.get_full_short() })
 
     # Require authentication before we handle updates. Return unimplemented.
-    @app.route('/<string:short>', methods=['PUT'])
-    def update_url(short):
+    @app.route('/<string:shorter>', methods=['PUT'])
+    def update_url(shorter):
         abort(501)
 
     # Require authentication before we handle deletes. Return unimplemented.
-    @app.route('/<string:short>', methods=['DELETE'])
-    def delete_url(short):
+    @app.route('/<string:shorter>', methods=['DELETE'])
+    def delete_url(shorter):
         abort(501)
