@@ -56,4 +56,4 @@ In all seriousness this is not a great idea for general URL shortening, as many 
 
 ### 🚀 Start it up
 
-* run `./bin/start.sh` to build images and start the server on 127.0.0.1:3001
+* run `./bin/start.sh` to build images, run containers and start the server on 127.0.0.1:3001
