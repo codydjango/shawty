@@ -1,14 +1,21 @@
 from flask import redirect, jsonify, request, abort
+from schema import schema
+from flask_graphql import GraphQLView
+
 from models import Url
 from database import db
 from sqlalchemy.schema import Sequence
 from helpers import is_valid_url, to_emoji_slug
 
+# Graphql routes instantiated at /graphql/ with GUI.
+def create_graphql_route(app):
+    app.add_url_rule('/graphql/', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
+
 # Routes are instantiated with reference to app, as per the Flask convention.
-def create_routes(app):
+def create_rest_routes(app):
     # On receiving a GET request, reply either with a 404 if it's not found in our database,
     # or a 301 redirect if it is.
-    @app.route('/rest/<string:slug>', methods=['GET'])
+    @app.route('/<string:slug>', methods=['GET'])
     def get_redirect(slug):
         url = Url.query.filter(Url.slug == slug).first()
 
@@ -22,7 +29,7 @@ def create_routes(app):
     #   3) grab the next id out of the database, use it to generate the next smallest available url
     #      save the new instance back to the database.
     #   4) return the new shortened url back to the client.
-    @app.route('/rest/', methods=['POST'])
+    @app.route('/', methods=['POST'])
     def create_url():
         if not request.is_json:
             abort(422)

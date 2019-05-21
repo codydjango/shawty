@@ -7,26 +7,24 @@ from helpers import is_valid_url, to_emoji_slug
 
 
 class Query(graphene.ObjectType):
-    shorter = graphene.String(url=graphene.String())
+    redirect_url = graphene.String(slug=graphene.String())
+    urls = graphene.List(graphene.String)
 
-    def resolve_shorter(self, info, url):
-        url = url.strip()
-        if not is_valid_url(url):
-            return 'malformed: {}'.format(url)
-
-        # Check if it already exists
-        url_obj = Url.query.filter(Url.redirect==url).first()
+    def resolve_redirect(self, info, slug):
+        url_obj = Url.query.filter(Url.slug==slug).first()
 
         if url_obj:
-            return url_obj.get_full_short()
+            return url_obj.redirect
 
-        next_id = db.session.execute(Sequence("urls_id_seq"))
-        url_obj = Url(id=next_id, redirect=url, slug=to_emoji_slug(next_id))
+        return None
 
-        db.session.add(url_obj)
-        db.session.commit()
-
-        return url_obj.get_full_short()
+    def resolve_urls(self, info):
+        return [url.get_full_short() for url in Url.query.all()]
 
 schema = graphene.Schema(query=Query)
 
+# Queries
+# {
+#   	redirect_url (slug: "sm-19")
+#   	urls
+# }

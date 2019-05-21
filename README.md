@@ -12,9 +12,11 @@ __Endpoints:__
 * Responds to a query such as:
 
 ```
-{
-  shorter (url: "http://codydjango.com")
-}
+# Queries
+# {
+#   	redirect_url (slug: "sm-19")
+#   	urls
+# }
 ```
 
 *REST*
