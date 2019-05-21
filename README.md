@@ -6,17 +6,28 @@ This API is built with python, graphql, and postgresql.
 
 __Endpoints:__
 
-*graphQL*
+*GraphQL*
 
 * GraphQL interface is available at  `http://localhost:3001/graphql/
-* Responds to a query such as:
+
+*Query*
 
 ```
-# Queries
-# {
-#   	redirect_url (slug: "sm-19")
-#   	urls
-# }
+{
+  	redirect_url (slug: "sm-19")
+  	urls
+}
+```
+
+*Mutation*
+
+```
+mutation myFirstMutation { 
+  createShortUrl(redirectUrl: "http://codydjango.com/learning-rust10") {
+  	short
+    ok
+  }
+}
 ```
 
 *REST*
