@@ -1,5 +1,4 @@
 import graphene
-from models import Url
 
 from models import Url
 from database import db
